@@ -36,7 +36,7 @@ Bench criterion: no regression vs v0.1 (the schema must compile to the same
 monomorphic loops — likely via per-type generated closures, not megamorphic
 dispatch).
 
-## reference implementation — the concise shareable version
+## reference implementation — the concise shareable version — ✅ SHIPPED (src/reference.ts)
 
 ~150 lines, zero performance engineering: pair-walk + explicit brute-force
 bijection search over the residue (the test-kit oracle, essentially, promoted

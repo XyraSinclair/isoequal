@@ -136,6 +136,19 @@ const eq = createIsoEqual({ maxSpeculativeOps: 1e7 })
 eq(a, b) // may throw IsoEqualBudgetError instead of hanging — never lies
 ```
 
+## The reference implementation
+
+The optimized engine is ~1,500 lines of tiered machinery. The *idea* is
+[~120 lines](./src/reference.ts): one partial bijection between the two
+object graphs, extended by guessing, checked by recursion, retracted on
+failure via a trail. Read it in one sitting, believe it, then trust the fast
+version — which is differentially tested against it (and against a
+brute-force isomorphism oracle) on thousands of random cyclic graphs.
+
+```ts
+import { isoEqualReference } from 'isoequal' // same verdicts, exponential worst case
+```
+
 ## API
 
 ```ts

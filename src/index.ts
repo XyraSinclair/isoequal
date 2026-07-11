@@ -34,6 +34,7 @@ import {
 } from './tier1.js'
 
 export { IsoEqualBudgetError, UNORDERED } from './tier1.js'
+export { isoEqualReference } from './reference.js'
 export type { IsoEqualOpts } from './tier1.js'
 
 export function createIsoEqual(customOpts: Partial<IsoEqualOpts> = {}) {
