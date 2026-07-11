@@ -34,6 +34,33 @@ isoequal is new and AI-authored. No maintainer will (or should) swap a
          supply-chain ARGUMENT: swapping dequal→isoequal removes zero deps
          and adds zero)
 
+## Compat audit results (2026-07-11, src/dequalCompat.test.ts)
+
+The "are we missing dequal functionality" question is answered empirically:
+
+- **Agreement everywhere it matters**: full explicit feature battery (dates,
+  regexps, typed arrays, node Buffer, DataView, class instances, sets, maps,
+  key order) + 8,000 acyclic fuzz pairs — zero unexplained disagreements.
+- **Every disagreement is a dequal defect**, now FOUR classes, each pinned:
+  1. Cycles → RangeError crash.
+  2. Set multiset trap → false positive.
+  3. Boxed primitives compared as empty objects → false positive
+     (`new Number(1)` equals `new Number(2)` in dequal).
+  4. **NEW (found by our fuzz): greedy-matching FALSE NEGATIVES** on
+     genuinely equal Maps/Sets with duplicate-shaped keys —
+     `Map([[{},1],[{},2]])` vs `Map([[{},2],[{},1]])` → dequal false.
+     Adjudicated by two independent implementations (engine + brute-force
+     reference). For use-deep-compare-effect this means SPURIOUS EFFECT
+     RE-RUNS on equal deps — a live, user-visible bug, subtler than the
+     crash and stronger for the PR pitch.
+- **S2 sharing strictness measured**: on fuzz WITH aliasing, zero
+  cross-direction surprises; and on fresh-per-render data (the React props
+  shape) the sharing delta never fires. Drop-in risk is lower than feared;
+  the S1 mode remains the belt-and-braces answer but is not a hard blocker
+  for the udce PR (their docs make no sharing-semantics promise).
+- Known intentional differences favoring us: invalid Dates equal each other
+  (dequal: unequal, since NaN !== NaN); documented in the matrix.
+
 ## Targets, ranked by case strength
 
 1. **kentcdodds/use-deep-compare-effect** — deps: `dequal ^2.0.2`. The
