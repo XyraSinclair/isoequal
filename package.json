@@ -43,6 +43,7 @@
         "build": "tsc -p tsconfig.build.json",
         "test": "vitest run",
         "bench": "BENCH=1 vitest run src/isoequal.bench.test.ts",
+        "release": "npm publish --access public",
         "prepublishOnly": "npm run test && npm run build"
     },
     "devDependencies": {
