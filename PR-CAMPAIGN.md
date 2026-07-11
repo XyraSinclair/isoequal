@@ -93,6 +93,18 @@ The "are we missing dequal functionality" question is answered empirically:
 ## Status
 
 - [x] Recon: use-deep-compare-effect confirmed on dequal ^2.0.2 (2026-07-11)
-- [ ] Maturity gate items (above) — BLOCKING all PRs
-- [ ] Stroke 1: trusted publishing + v1.0.0
-- [ ] Stroke 2: udce differential run
+- [x] Compat audit: parity verified + FOURTH dequal defect found (see above)
+- [x] **THE receipt: udce's own suite green with the swap** — 8/8 tests,
+      2/2 snapshots, ~equal runtime (0.98s vs 1.09s baseline); typecheck
+      deltas none (pre-existing @types/node noise identical both sides).
+      Swap tested from a packed tarball including the dual CJS build.
+- [x] Dual ESM+CJS build (their 2021 jest toolchain requires CJS)
+- [x] v1.0.0 semantics freeze + CHANGELOG (in repo; publish pending)
+- [x] Issue + PR texts drafted: drafts/udce-issue.md, drafts/udce-pr.md
+- [ ] **GATE (Xyra, ~1 min): publish 1.0.0** — `npm run release` +
+      browser-link/passkey (or the bypass token once minted). The PR must
+      reference a published version containing the CJS build.
+- [ ] File issue on kentcdodds/use-deep-compare-effect (text ready)
+- [ ] Fork + branch + PR (one-line import swap + dep bump; text ready)
+- [ ] Also file the false-negative bug upstream on lukeed/dequal (good
+      citizenship; the repro stands alone)

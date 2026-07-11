@@ -1,6 +1,6 @@
 {
     "name": "isoequal",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Deep equality that actually handles cyclic structures and unordered collections \u2014 Sets, Maps, and anything declaring the unordered-collection protocol \u2014 under sound, sharing-sensitive isomorphism semantics.",
     "keywords": [
         "deep-equal",
