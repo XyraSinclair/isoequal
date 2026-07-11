@@ -1,0 +1,9 @@
+[[rules]]
+id = "package_managers:npm-publish"
+reason = "isoequal release explicitly authorized by Xyra 2026-07-11; dry-run validated, prepublishOnly re-gates test+build"
+expires = "2026-07-12"
+
+[[rules]]
+id = "package_managers:pnpm-publish"
+reason = "same release, pnpm path"
+expires = "2026-07-12"

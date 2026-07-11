@@ -1,0 +1,6 @@
+# dcg project config for isoequal.
+# This repo IS an npm package — publishing is its purpose, not an accident.
+# Allow authorized 2026-07-11 by Xyra (explicit instruction, dry-run validated
+# first; prepublishOnly re-gates on test + build at publish time).
+[overrides]
+allow_patterns = ["npm publish"]
