@@ -125,7 +125,7 @@ by engine + brute-force reference — the two never split once):
 | remeda isDeepEqual | RangeError on cycles; dup-key FN; boxed-primitive FALSE POSITIVE (new Number(1) ≡ new Number(2)); ~10% fuzz FN | next wave |
 | @wry/equality (Apollo) | ring FN; dup-key FN; 17% fuzz FN rate | next wave |
 | react-fast-compare | SILENT false on self-cycles (no crash — worse); ring FN; dup-key FN | next wave |
-| deep-eql (chai) | **EXONERATED**: zero fuzz defects; rings correct; C3+C3≡C6 is coherent unfolding (S1) semantics, not a bug. Strongest incumbent found. Do NOT file. | — |
+| deep-eql (chai) | ACYCLIC: exonerated — zero defects in 3000-pair fuzz, coherent S1 semantics, strongest incumbent. CYCLIC+UNORDERED: **collapses — 287/300 (96%) false negatives** on shuffled clones of random cyclic graphs with Sets (hunt/deepEqlBoundary.mjs); hand-picked symmetric cases (self-cycles, uniform rings) pass, general case does not. Never false-accepts (0/300 mutants). Perf: 5.5× slower on 10k primitive sets, 7.5× on object sets. Chai documents circular support → strong candidate filing | next wave |
 
 Notes: Vitest's expect uses jasmine-derived equals, NOT deep-eql — still
 needs its own probe. The hunt harness lives in hunt/ and points at any lib
