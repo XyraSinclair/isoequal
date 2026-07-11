@@ -112,3 +112,22 @@ The "are we missing dequal functionality" question is answered empirically:
       2021 so patience or a gentle ping in a few weeks
 - [ ] Next targets when energy allows: Vitest opt-in matcher (research
       their iterableEquality first), TanStack replaceEqualDeep fuzz
+
+## Hunt round 2 (2026-07-11, hunt/differential.mjs + hunt/round2.mjs)
+
+Differential harness (signature cases + 3000-pair fuzz per lib, adjudicated
+by engine + brute-force reference — the two never split once):
+
+| library | defects found | filed |
+|---|---|---|
+| **nodejs core** (util/assert deep equal) | **NEW CRASH**: TypeError on Maps with null keys (2-entry repro, v24+v26, all 3 APIs); plus the known ring false-negative | **nodejs/node#64433** (crash) |
+| **es-toolkit** isEqual | Map dup-shaped-key false negatives (~10% of equal collection pairs in fuzz); deviates from lodash | **toss/es-toolkit#1881** |
+| remeda isDeepEqual | RangeError on cycles; dup-key FN; boxed-primitive FALSE POSITIVE (new Number(1) ≡ new Number(2)); ~10% fuzz FN | next wave |
+| @wry/equality (Apollo) | ring FN; dup-key FN; 17% fuzz FN rate | next wave |
+| react-fast-compare | SILENT false on self-cycles (no crash — worse); ring FN; dup-key FN | next wave |
+| deep-eql (chai) | **EXONERATED**: zero fuzz defects; rings correct; C3+C3≡C6 is coherent unfolding (S1) semantics, not a bug. Strongest incumbent found. Do NOT file. | — |
+
+Notes: Vitest's expect uses jasmine-derived equals, NOT deep-eql — still
+needs its own probe. The hunt harness lives in hunt/ and points at any lib
+in minutes; the "found bugs in node core" line is now a credibility asset
+for every future filing.
