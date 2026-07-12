@@ -179,6 +179,12 @@ equal; single-edge mutants must differ) at larger scales. The full design,
 with proofs of the soundness architecture and the complexity story, is in
 [DESIGN.md](./DESIGN.md).
 
+## The story
+
+How this library came to be — the GI-completeness realization, the algorithm,
+and the bugs the fuzzer found across the ecosystem (including Node core):
+[STORY.md](./STORY.md).
+
 ## License
 
 MIT © Xyra Sinclair
